@@ -1,6 +1,6 @@
 # Tietokantasovelluksen esittelysivu
 
-Yleisiä linkkejä:
+Yleisiä linkkejä :
 
 * [Linkki sovellukseeni](http://aqyakush.users.cs.helsinki.fi/tsoha)
 * [Linkki dokumentaatiooni](https://github.com/aqyakush/Tsoha-Bootstrap/tree/master/doc)
