@@ -21,7 +21,7 @@
   </head>
 
   <body>
-
+    <h4> Ostoskassi </h4>
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
 
@@ -40,11 +40,15 @@
           <ul class="nav navbar-nav">
             <!-- Navigaation linkit -->
             <li><a href="{{base_path}}">Etusivu</a></li>
+            <li><a href="/tsoha/products">Tuottevalikoima</a></li>
+            <li><a href="#">Erityistoiveet</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Kirjaudu sisään</a></li>
           </ul>
         </div>
       </div>
     </nav>
-
     <div id="main-container">
       <!-- Dynaaminen sisältö tulee tähän -->
       {% block content %}{% endblock %}
