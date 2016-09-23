@@ -27,5 +27,9 @@
     public static function product_modify(){
         View::make('suunnitelmat/product_modify.html');
     }
+    public static function login(){
+        View::make('suunnitelmat/Login.html');
+    }
+
     
   }

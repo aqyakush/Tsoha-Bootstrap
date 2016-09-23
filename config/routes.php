@@ -19,3 +19,6 @@
   $routes->get('/products/modify', function() {
     HelloWorldController::product_modify();
   });
+  $routes->get('/login', function() {
+        HelloWorldController::login();
+  });
