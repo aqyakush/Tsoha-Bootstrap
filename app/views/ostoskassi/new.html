@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Lisää tuote valikoimaan</h1>
+
+  <form method="post" action="{{base_path}}/products">
+    <div class="form-group">
+      <label>Kuva</label>
+      <input type="text" name="kuva" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Nimi</label>
+      <input type="text" name="nimi" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Hinta</label>
+      <input type="number" step=0.01 name="hinta" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Kuvaus</label>
+      <textarea name="kuvaus" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Lisää</button>
+    </div>
+  </form>
+{% endblock %}

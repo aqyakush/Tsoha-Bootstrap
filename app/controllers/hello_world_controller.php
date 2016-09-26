@@ -9,11 +9,11 @@
 
     public static function sandbox(){
         //$iphone1 = new Tuote(array('ttunnus' => 1, 'nimi' => 'Iphone 7','hinta'=>'999.99', 'kuvaus' => 'it is okay'));
-        $iphone = Tuote::find(1);
+        //$iphone = Tuote::find(1);
         $tuotteet = Tuote::all();
         // Kint-luokan dump-metodi tulostaa muuttujan arvon
         Kint::dump($tuotteet);
-        Kint::dump($iphone);
+        //Kint::dump($iphone);
     }
     public static function front_page(){
         View::make('suunnitelmat/front_page.html');
