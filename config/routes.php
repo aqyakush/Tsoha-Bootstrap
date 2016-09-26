@@ -11,7 +11,10 @@
     HelloWorldController::front_page();
   });
   $routes->get('/products', function() {
-    HelloWorldController::product_list();
+      tuote_controller::index();
+  });
+  $routes->get('/products/:ttunnus', function($ttunnus){
+      tuote_controller::show($ttunnus);
   });
   $routes->get('/products/1', function() {
     HelloWorldController::product_show();

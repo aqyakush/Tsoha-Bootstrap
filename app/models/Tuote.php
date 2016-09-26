@@ -13,7 +13,7 @@
  */
 class Tuote extends BaseModel{
     
-    public $ttunnus, $kuva, $nimi, $hinta, $kuvas;
+    public $ttunnus, $kuva, $nimi, $hinta, $kuvaus;
     
     public function __construct($attributes){
         parent::__construct($attributes);
@@ -30,7 +30,7 @@ class Tuote extends BaseModel{
                 'kuva' => $row['kuva'],
                 'nimi' => $row['nimi'],
                 'hinta' => $row['hinta'],
-                'kuvas' => $row['kuvas']
+                'kuvaus' => $row['kuvaus']
             ));
        
         }
@@ -48,7 +48,7 @@ class Tuote extends BaseModel{
             'kuva' => $row['kuva'],
             'nimi' => $row['nimi'],
             'hinta' => $row['hinta'],
-            'kuvas' => $row['kuvas']
+            'kuvaus' => $row['kuvaus']
       ));
 
       return $tuote;

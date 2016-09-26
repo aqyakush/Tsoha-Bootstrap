@@ -7,46 +7,45 @@
  */
 
 /**
- * Description of Tilaus
+ * Description of Liitostaulu
  *
  * @author jaa
  */
-class Tilaus extends BaseModel{
-    public $otunnus, $ttunnus, $atunnus, $lento;
+class Liitostaulu {
+    public $ottunus, $ttunnus;
     
     public function __construct($attributes){
         parent::__construct($attributes);
     }
     
     public static function all(){
-        $query = DB::connection()->prepare('SELECT * FROM Tilaus');
+    $query = DB::connection()->prepare('SELECT * FROM Liitostaulu');
         $query->execute();
         $rows = $query->fetchAll();
-        $tilaukset = array();
+        $taulut = array();
         foreach($rows as $row){
-            $tilaukset[]=new Tilaus(array(
+            $taulut[]=new Liitostaulu(array(
                 'otunnus' => $row['otunnus'],
-                'atunnus' => $row['atunnus'],
-                'lento' => $row['lento']
+                'ttunnus' => $row['ttunus']
+                
             ));
        
         }
         
-        return $tilaukset;
+        return $taulut;
     }
     public static function find($otunnus){
-        $query = DB::connection()->prepare('SELECT * FROM Tilaus WHERE otunnus = :otunnus LIMIT 1');
+        $query = DB::connection()->prepare('SELECT * FROM Liitostaulu WHERE otunnus = :otunnus');
         $query->execute(array('otunnus' => $otunnus));
         $row = $query->fetch();
 
         if($row){
-            $tilaus = new Tilaus(array(
+            $taulu = new Liitotaulu(array(
             'otunnus' => $row['otunnus'],
-            'atunnus' => $row['atunnus'],
-            'lento' => $row['lento']
+            'ttunnus' => $row['ttunus']
       ));
 
-      return $tilaus;
+      return $taulu;
     }
 
     return null;

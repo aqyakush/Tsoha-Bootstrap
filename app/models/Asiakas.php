@@ -12,7 +12,7 @@
  * @author jaa
  */
 class Asiakas extends BaseModel{
-    public $atunnus, $nimi, $syntymaaika, $lento, $salasana;
+    public $atunnus, $nimi, $syntymaaika, $lento, $salasana, $oikeuksia;
     
     public function __construct($attributes){
         parent::__construct($attributes);
@@ -29,12 +29,13 @@ class Asiakas extends BaseModel{
                 'nimi' => $row['nimi'],
                 'syntymaaika' => $row['syntymaaika'],
                 'lento' => $row['lento'],
-                'salasana' => $row['salasana']
+                'salasana' => $row['salasana'],
+                'oikeuksia' => $row['oikeuksia']
             ));
        
         }
         
-        return $tuotteet;
+        return $asiakkaat;
     }
     public static function find($atunnus){
         $query = DB::connection()->prepare('SELECT * FROM Asiakas WHERE atunnus = :atunnus LIMIT 1');
@@ -47,7 +48,8 @@ class Asiakas extends BaseModel{
             'nimi' => $row['nimi'],
             'syntymaaika' => $row['syntymaaika'],
             'lento' => $row['lento'],
-            'salasana' => $row['salasana']
+            'salasana' => $row['salasana'],
+            'oikeuksia' => $row['oikeuksia']
       ));
 
       return $asiakas;
