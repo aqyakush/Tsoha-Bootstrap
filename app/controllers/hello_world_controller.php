@@ -8,11 +8,11 @@
     }
 
     public static function sandbox(){
-        //$iphone1 = new Tuote(array('ttunnus' => 1, 'nimi' => 'Iphone 7','hinta'=>'999.99', 'kuvaus' => 'it is okay'));
+        $iphone1 = new Tuote(array('nimi' => 'Ip','hinta'=>'0.00', 'kuvaus' => 'it is okay,fsdpfkspfkspokfposkodpdfsdjfdsjofpofkopekpokewopwepofpoekfpowekfpowekfpowepj              poekropkweoprkowepkrpowekropewporweporpeowropweropweiporweopriowepiropewiropweiropiweporieopirpoweirpoweirpoweirpoweirpoweipofjksnflkdsnlkneoneonoisfoijrpiofajepifoisgnoeingoeinfegjoiehgirejtopgjognoaingoiegoiefgorogweignonienfoisnoiengoisnoinsegoinoeitniengsongoiengosbngoiengosinie'));
         //$iphone = Tuote::find(1);
-        $tuotteet = Tuote::all();
+        $errors=$iphone1->errors();
         // Kint-luokan dump-metodi tulostaa muuttujan arvon
-        Kint::dump($tuotteet);
+        Kint::dump($errors);
         //Kint::dump($iphone);
     }
     public static function front_page(){

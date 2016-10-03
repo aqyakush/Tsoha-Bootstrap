@@ -17,6 +17,7 @@ class Tuote extends BaseModel{
     
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_nimi','validate_hinta','validate_kuvaus');
     }
     
     public static function all(){
@@ -66,4 +67,50 @@ class Tuote extends BaseModel{
     // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
         $this->ttunnus = $row['ttunnus'];
   }
+  public function validate_nimi(){
+      $errors = array();
+      if($this->nimi==''||$this->nimi==null){
+          $errors[]='Nimi ei saa olla tyhjä';
+      } if(strlen($this->nimi)<3){
+          $errors[]='Nimen pituuden tulee ovlla vähintään kolme merkkiä!';
+      }
+      return $errors;
+  }
+  public function validate_hinta(){
+      $errors= array();
+      if($this->hinta==''||$this->hinta==null){
+          $errors[]='Hinta ei saa olla tyhjä';
+      } if(!(is_numeric($this->hinta))){
+          $errors[]='Hinta ei saa olla muu kuin numero';
+      } if($this->hinta<=0){
+          $errors[]='Hinta ei saa olla nolla tai pienempi';
+      }
+      return $errors;
+  }
+  public function validate_kuvaus(){
+      $errors=array();
+      if($this->kuvaus==''||$this->kuvaus==null){
+          $errors[]='Kuvaus ei saa olla tyhjä';
+      } if (strlen($this->kuvaus)>300){
+          $errors[]='Hinta ei saa olla pidempi kuin 300 merkkiä';
+      } if (strlen($this->kuvaus)<5){
+          $errors[]='Kuvauksen pituuden tulee olla vähintään viisi merkkiä';
+      }
+      return $errors;
+  }
+  public function update($ttunnus){
+       $query = DB::connection()->prepare('UPDATE TUOTE  SET (kuva, nimi,hinta,kuvaus) VALUES (:kuva, :nimi, :hinta, :kuvaus) where ttunnus:=tunnus');
+    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+        $query->execute();
+    // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
+        $row = $query->fetch();
+        Kint::dump($row);
+     
+  }
+   public function destroy($ttunnus){
+        $query = DB::connection()->prepare('DELETE FROM TUOTE WHERE  ttunnus = :ttunnus');
+        $query->execute(array('ttunnus' => $ttunnus));
+        
+   }
+  
 }

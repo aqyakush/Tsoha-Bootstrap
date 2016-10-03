@@ -57,4 +57,23 @@ class Asiakas extends BaseModel{
 
     return null;
     }
+    public static function authenticate($atunnus, $salasana){
+        $query = DB::connection()->prepare('SELECT * FROM Asiakas WHERE atunnus = :atunnus AND salasana = :salasana LIMIT 1');
+        $query->execute(array('atunnus' => $atunnus, 'salasana' => $salasana));
+        $row = $query->fetch();
+        if($row){
+            $asiakas = new Asiakas(array(
+            'atunnus' => $row['atunnus'],
+            'nimi' => $row['nimi'],
+            'syntymaaika' => $row['syntymaaika'],
+            'lento' => $row['lento'],
+            'salasana' => $row['salasana'],
+            'oikeuksia' => $row['oikeuksia']
+            ));
+
+            return $asiakas;  
+        }else{
+            return null;
+        }
+    }
 }

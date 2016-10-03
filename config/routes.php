@@ -23,11 +23,30 @@
   $routes->get('/products/:ttunnus', function($ttunnus){
       tuote_controller::show($ttunnus);
   });
-  // Pelin lisääminen tietokantaan
   $routes->post('/products', function(){
       tuote_controller::store();
   });
-    // Pelin lisäyslomakkeen näyttäminen
+  $routes->get('/products/:ttunnus/edit', function($ttunnus){
+  // Tuotteen muokkauslomakkeen esittäminen
+    tuote_controller::edit($ttunnus);
+  });
+  $routes->post('/products/:ttunnus/edit1', function($ttunnus){
+  // Tuotteen muokkaaminen
+    tuote_controller::update($ttunnus);
+  });
+
+  $routes->post('/products/:ttunnus/destroy', function($ttunnus){
+  // Tuotteen poisto
+    tuote_controller::destroy($ttunnus);
+  });
+  $routes->get('/login', function(){
+    // Kirjautumislomakkeen esittäminen
+    UserController::login();
+  });
+  $routes->post('/login', function(){
+    // Kirjautumisen käsittely
+    UserController::handle_login();
+  });
  
   $routes->get('/products/1', function() {
     HelloWorldController::product_show();
@@ -38,3 +57,4 @@
   $routes->get('/login', function() {
         HelloWorldController::login();
   });
+  
