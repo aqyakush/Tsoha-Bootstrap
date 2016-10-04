@@ -15,7 +15,7 @@
   <p>
       {{tuote.kuvaus}}
   </p>
-  {% if user_logged_in %}
+  {% if user_logged_in.oikeuksia == 0 %}
     <form method="post" action="{{base_path}}/products/{{tuote.ttunnus}}/destroy" style="display: inline-block;">
         <button type="submit" class="btn btn-danger">Poista</button>
     </form>

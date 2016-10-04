@@ -8,9 +8,13 @@ Yleisiä linkkejä :
 * [Linkki tuotteen sivulle](http://aqyakush.users.cs.helsinki.fi/tsoha/products/1)
 * [Linkki muokaa tuotte sivulle](http://aqyakush.users.cs.helsinki.fi/tsoha/products/modify)
 * [Linkki etusivulle](http://aqyakush.users.cs.helsinki.fi/tsoha/)
+Tavallinen asiakas:
 käyttäjätunnus: Matti
 salasana: Matti123
 
+Ylläpitäjä:
+Käyttäjätunnus: Ivan
+salasana: Ivan123
 ## Työn aihe
 
 [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Ostoskassi.html) 
