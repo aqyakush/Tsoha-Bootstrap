@@ -23,14 +23,12 @@
   $routes->get('/products/:ttunnus', function($ttunnus){
       tuote_controller::show($ttunnus);
   });
-  $routes->post('/products', function(){
-      tuote_controller::store();
-  });
+  
   $routes->get('/products/:ttunnus/edit', function($ttunnus){
   // Tuotteen muokkauslomakkeen esittäminen
     tuote_controller::edit($ttunnus);
   });
-  $routes->post('/products/:ttunnus/edit1', function($ttunnus){
+  $routes->post('/products/:ttunnus/edit', function($ttunnus){
   // Tuotteen muokkaaminen
     tuote_controller::update($ttunnus);
   });
@@ -48,13 +46,6 @@
     UserController::handle_login();
   });
  
-  $routes->get('/products/1', function() {
-    HelloWorldController::product_show();
-  });
-  $routes->get('/products/modify', function() {
-    HelloWorldController::product_modify();
-  });
-  $routes->get('/login', function() {
-        HelloWorldController::login();
-  });
+  
+  
   

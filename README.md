@@ -8,6 +8,8 @@ Yleisiä linkkejä :
 * [Linkki tuotteen sivulle](http://aqyakush.users.cs.helsinki.fi/tsoha/products/1)
 * [Linkki muokaa tuotte sivulle](http://aqyakush.users.cs.helsinki.fi/tsoha/products/modify)
 * [Linkki etusivulle](http://aqyakush.users.cs.helsinki.fi/tsoha/)
+käyttäjätunnus: Matti
+salasana: Matti123
 
 ## Työn aihe
 

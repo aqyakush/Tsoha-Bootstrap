@@ -78,16 +78,16 @@ class tuote_controller extends BaseController {
       View::make('ostoskassi/edit.html', array('errors' => $errors, 'attributes' => $attributes));
     }else{
       // Kutsutaan alustetun olion update-metodia, joka päivittää tuotteen tiedot tietokannassa
-      $tuote->update($ttunnus);
+      $tuote->update();
 
-      Redirect::to('/lalalaal' , array('message' => 'Tuotetta on muokattu onnistuneesti!'));
+      Redirect::to('/products' , array('message' => 'Tuotetta on muokattu onnistuneesti!'));
     }
   }
   public static function destroy($ttunnus){
     // Alustetaan Game-olio annetulla id:llä
     $tuote = new Tuote(array('ttunnus' => $ttunnus));
     // Kutsutaan Game-malliluokan metodia destroy, joka poistaa pelin sen id:llä
-    $tuote->destroy($ttunnus);
+    $tuote->destroy();
 
     // Ohjataan käyttäjä tuotteen listaussivulle ilmoituksen kera
     Redirect::to('/products', array('message' => 'Tuote on poistettu onnistuneesti!'));

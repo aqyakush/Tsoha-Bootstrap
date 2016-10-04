@@ -98,18 +98,18 @@ class Tuote extends BaseModel{
       }
       return $errors;
   }
-  public function update($ttunnus){
-       $query = DB::connection()->prepare('UPDATE TUOTE  SET (kuva, nimi,hinta,kuvaus) VALUES (:kuva, :nimi, :hinta, :kuvaus) where ttunnus:=tunnus');
+  public function update(){
+       $query = DB::connection()->prepare('UPDATE TUOTE  SET kuva :=kuva, nimi=:=nimi, hinta:=hinta, kuvaus:=kuvaus');
     // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
-        $query->execute();
+        $query->execute(array('ttunnus' => $this->ttunnus));
     // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
         $row = $query->fetch();
         Kint::dump($row);
      
   }
-   public function destroy($ttunnus){
+   public function destroy(){
         $query = DB::connection()->prepare('DELETE FROM TUOTE WHERE  ttunnus = :ttunnus');
-        $query->execute(array('ttunnus' => $ttunnus));
+        $query->execute(array('ttunnus' => $this->ttunnus));
         
    }
   

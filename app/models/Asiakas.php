@@ -12,7 +12,7 @@
  * @author jaa
  */
 class Asiakas extends BaseModel{
-    public $atunnus, $nimi, $syntymaaika, $lento, $salasana, $oikeuksia;
+    public $atunnus, $nimi, $syntymaaika, $lennot, $salasana, $oikeuksia;
     
     public function __construct($attributes){
         parent::__construct($attributes);
@@ -28,7 +28,7 @@ class Asiakas extends BaseModel{
                 'atunnus' => $row['atunnus'],
                 'nimi' => $row['nimi'],
                 'syntymaaika' => $row['syntymaaika'],
-                'lento' => $row['lento'],
+                'lennot' => $row['lennot'],
                 'salasana' => $row['salasana'],
                 'oikeuksia' => $row['oikeuksia']
             ));
@@ -47,7 +47,7 @@ class Asiakas extends BaseModel{
             'atunnus' => $row['atunnus'],
             'nimi' => $row['nimi'],
             'syntymaaika' => $row['syntymaaika'],
-            'lento' => $row['lento'],
+            'lennot' => $row['lennot'],
             'salasana' => $row['salasana'],
             'oikeuksia' => $row['oikeuksia']
       ));
@@ -57,16 +57,16 @@ class Asiakas extends BaseModel{
 
     return null;
     }
-    public static function authenticate($atunnus, $salasana){
-        $query = DB::connection()->prepare('SELECT * FROM Asiakas WHERE atunnus = :atunnus AND salasana = :salasana LIMIT 1');
-        $query->execute(array('atunnus' => $atunnus, 'salasana' => $salasana));
+    public static function authenticate($nimi, $salasana){
+        $query = DB::connection()->prepare('SELECT * FROM Asiakas WHERE nimi = :nimi AND salasana = :salasana LIMIT 1');
+        $query->execute(array('nimi' => $nimi, 'salasana' => $salasana));
         $row = $query->fetch();
         if($row){
             $asiakas = new Asiakas(array(
             'atunnus' => $row['atunnus'],
             'nimi' => $row['nimi'],
             'syntymaaika' => $row['syntymaaika'],
-            'lento' => $row['lento'],
+            'lennot' => $row['lennot'],
             'salasana' => $row['salasana'],
             'oikeuksia' => $row['oikeuksia']
             ));
