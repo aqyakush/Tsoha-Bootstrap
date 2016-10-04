@@ -1,5 +1,6 @@
 <?php
 
+
   $routes->get('/', function() {
     HelloWorldController::index();
   });
@@ -44,6 +45,9 @@
   $routes->post('/login', function(){
     // Kirjautumisen käsittely
     UserController::handle_login();
+  });
+  $routes->post('/logout', function(){
+    UserController::logout();
   });
  
   

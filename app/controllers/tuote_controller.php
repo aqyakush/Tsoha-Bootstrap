@@ -26,6 +26,7 @@ class tuote_controller extends BaseController {
         View::make('ostoskassi/product_show.html', array('tuote' => $tuote));
     }
     public static function store(){
+        self::check_logged_in();
         // POST-pyynnön muuttujat sijaitsevat $_POST nimisessä assosiaatiolistassa
         $params = $_POST;
         // Alustetaan uusi Tuote-luokan olion käyttäjän syöttämillä arvoilla
@@ -50,17 +51,20 @@ class tuote_controller extends BaseController {
         
   }
    public static function create(){
+       self::check_logged_in();
         View::make('ostoskassi/new.html');
    }
    
    //tuotteen muokkaminen (lomakkeen esittäminen)
    public static function edit($ttunnus){
-    $tuote = Tuote::find($ttunnus);
-    View::make('ostoskassi/edit.html', array('attributes' => $tuote));
+       self::check_logged_in();
+       $tuote = Tuote::find($ttunnus);
+       View::make('ostoskassi/edit.html', array('attributes' => $tuote));
   }
   //tuotteen muokkaaminen(lomakkeen käsittely)
    public static function update($ttunnus){
-    $params = $_POST;
+       self::check_logged_in();
+       $params = $_POST;
         // Alustetaan uusi Tuote-luokan olion käyttäjän syöttämillä arvoilla
         $attributes = array(
           'ttunnus' => $ttunnus,
@@ -84,6 +88,7 @@ class tuote_controller extends BaseController {
     }
   }
   public static function destroy($ttunnus){
+    self::check_logged_in();
     // Alustetaan Game-olio annetulla id:llä
     $tuote = new Tuote(array('ttunnus' => $ttunnus));
     // Kutsutaan Game-malliluokan metodia destroy, joka poistaa pelin sen id:llä
