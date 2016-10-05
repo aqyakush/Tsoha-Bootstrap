@@ -99,9 +99,9 @@ class Tuote extends BaseModel{
       return $errors;
   }
   public function update(){
-       $query = DB::connection()->prepare('UPDATE TUOTE  SET kuva :=kuva, nimi=:=nimi, hinta:=hinta, kuvaus:=kuvaus');
+       $query = DB::connection()->prepare('UPDATE TUOTE  SET kuva :=kuva, nimi=:=nimi, hinta:=hinta, kuvaus:=kuvaus WHERE ttunnus:=ttunnus');
     // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
-        $query->execute(array('ttunnus' => $this->ttunnus));
+        $query->execute(array('ttunnus' => $this->ttunnus,'kuva' => $this->kuva, 'nimi' => $this->nimi, 'hinta' => $this->hinta, 'kuvaus' => $this->kuvaus));
     // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
         $row = $query->fetch();
         Kint::dump($row);
