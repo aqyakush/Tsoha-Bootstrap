@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if user_logged_in.oikeuksia == 1 %}
+    <p>
+        <a href="{{base_path}}/Wishes/new" class="btn btn-success">Lisää toive</a>
+    </p>
+  {% endif %}
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Toive</th>
+        <th>Lento</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for toive in toiveet %}
+        {% if user_logged_in.atunnus == toive.atunnus %}
+            <tr>
+                <td>{{toive.toive}}</td>
+                <td>{{toive.lento}}</td>
+            </tr>
+        {% endif %} 
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

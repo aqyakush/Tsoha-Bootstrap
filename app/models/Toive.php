@@ -51,4 +51,10 @@ class Toive extends BaseModel{
 
     return null;
     }
+    public function save(){
+    // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
+        $query = DB::connection()->prepare('INSERT INTO TOIVE (atunnus, lento,toive) VALUES (:atunnus, :lento, :toive) ');
+    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+        $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento, 'toive' => $this->toive));
+  }
 }

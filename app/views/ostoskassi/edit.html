@@ -11,6 +11,7 @@
       </ul>
     </div>
   {% endif %}
+  <form method="post" action="{{base_path}}/products/{{attributes.ttunnus}}/edit" >
     <div class="form-group">
       <label class="control-label">Kuva</label>
       <input name="kuva" class="form-control" value="{{attributes.kuva}}" type="text" >
@@ -30,7 +31,7 @@
       <label class="control-label">Kuvaus</label>
       <textarea name="kuvaus" class="form-control">{{attributes.kuvaus}}</textarea>
     </div>
-    <form method="post" action="{{base_path}}/products/{{attributes.ttunnus}}/edit" style="display: inline-block;">
-        <button type="submit" class="btn btn-danger">Muokkaa</button>
-    </form>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Muokaa</button>
+    </div>
 {% endblock %}

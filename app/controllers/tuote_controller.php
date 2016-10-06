@@ -64,27 +64,26 @@ class tuote_controller extends BaseController {
   //tuotteen muokkaaminen(lomakkeen käsittely)
    public static function update($ttunnus){
        self::check_logged_in();
-       //$params = $_POST;
-        // Alustetaan uusi Tuote-luokan olion käyttäjän syöttämillä arvoilla
-        //$attributes = array(
-          //'ttunnus' => $ttunnus,
-          //'kuva' => $_POST['kuva'],
-          //'nimi' => $_POST['nimi'],
-          //'hinta' => $_POST['hinta'],
-          //'kuvaus' => $_POST['kuvaus']
-        //); 
-        
+       $params = $_POST;
+
     // Alustetaan Tuote-olio käyttäjän syöttämillä tiedoilla
-    //$tuote = new Tuote($attributes);
-    $tuote = Tuote::find($ttunnus); // luo uusi tuote jolla on eri ttunnus
-    $tuote->hinta= $_POST['hinta'];
-    
+    $tuote = new Tuote(array(
+            'ttunnus' => $ttunnus,
+            'kuva' => $params['kuva'],
+            'nimi' => $params['nimi'],
+            'hinta' => $params['hinta'],
+            'kuvaus' => $params['kuvaus']
+            ));
     $errors = $tuote->errors();
+    //$tuote = Tuote::find($ttunnus); // luo uusi tuote jolla on eri ttunnus
+    //$tuote->hinta= $_POST['hinta'];
+    
+    //$errors = $tuote->errors();
     if(count($errors) > 0){
       View::make('ostoskassi/edit.html', array('errors' => $errors)); //'attributes' => $attributes));
     }else{
       // Kutsutaan alustetun olion update-metodia, joka päivittää tuotteen tiedot tietokannassa
-      $tuote->update();
+      $tuote->update($ttunnus);
 
       Redirect::to('/products/'.$tuote->ttunnus, array('message' => 'Tuotetta on muokattu onnistuneesti!'));
     }

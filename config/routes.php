@@ -52,6 +52,16 @@
   $routes->post('/logout', function(){
     UserController::logout();
   });
+  $routes->get('/Wishes', function(){
+    toive_controller::index();
+  });
+  $routes->post('/Wishes/::atunnus', function($atunnus){
+      toive_controller::store($atunnus);
+   });
+   // Toiven lisäyslomakkeen näyttäminen
+   $routes->get('/Wishes/new', function(){
+      toive_controller::create();
+    });
  
   
   

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lisää toive</h1>
+
+  <form method="post" action="{{base_path}}/Wishes">
+    
+    <div class="form-group">
+      <label class="control-label">Lento</label>
+      <input type="text" name="lento" class="form-control">
+    </div>
+    <div class="form-group">
+      <label class="control-label">Toive</label>
+      <textarea name="Toive" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Lisää</button>
+    </div>
+  </form>
+{% endblock %}
