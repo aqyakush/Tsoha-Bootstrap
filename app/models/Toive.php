@@ -16,6 +16,7 @@ class Toive extends BaseModel{
     
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_lento','validate_toive');
     }
     
     public static function all(){
@@ -24,7 +25,7 @@ class Toive extends BaseModel{
         $rows = $query->fetchAll();
         $toiveet = array();
         foreach($rows as $row){
-            $toiveet[]=new Toiveet(array(
+            $toiveet[]=new Toive(array(
                 'atunnus' => $row['atunnus'],
                 'toive' => $row['toive'],
                 'lento' => $row['lento']
@@ -53,8 +54,35 @@ class Toive extends BaseModel{
     }
     public function save(){
     // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
-        $query = DB::connection()->prepare('INSERT INTO TOIVE (atunnus, lento,toive) VALUES (:atunnus, :lento, :toive) ');
+        $query = DB::connection()->prepare('INSERT INTO TOIVEET (atunnus, lento,toive) VALUES (:atunnus, :lento, :toive) ');
     // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
         $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento, 'toive' => $this->toive));
   }
+  public function validate_lento(){
+    $errors = array();
+    if($this->lento == '' || $this->lento == null){
+        $errors[] = 'Lento ei saa olla tyhjä!';
+    }
+    if(10<strlen($this->lento) || strlen($this->lento) < 3){
+        $errors[] = 'Lennon pituuden tulee olla vähintään kolme merkkiä ja maksimmisään 10 merkkiä!';
+    }
+
+    return $errors;
+ }
+ public function validate_toive(){
+      $errors=array();
+      if($this->toive==''||$this->toive==null){
+          $errors[]='Toive ei saa olla tyhjä';
+      } if (strlen($this->toive)>300){
+          $errors[]='Hinta ei saa olla pidempi kuin 300 merkkiä';
+      } if (strlen($this->toive)<5){
+          $errors[]='Kuvauksen pituuden tulee olla vähintään viisi merkkiä';
+      }
+      return $errors;
+  }
+  public function destroy(){
+        $query = DB::connection()->prepare('DELETE FROM TOIVEET WHERE  atunnus = :atunnus and lento = :lento');
+        $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento));
+        
+   }
 }

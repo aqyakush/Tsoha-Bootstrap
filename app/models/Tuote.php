@@ -58,7 +58,7 @@ class Tuote extends BaseModel{
     return null;
     }
     public function save(){
-    // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
+    // Lisätään RETURNING ttunnus tietokantakyselymme loppuun, niin saamme lisätyn rivin ttunnus-sarakkeen arvon
         $query = DB::connection()->prepare('INSERT INTO TUOTE (kuva, nimi,hinta,kuvaus) VALUES (:kuva, :nimi, :hinta, :kuvaus) RETURNING ttunnus');
     // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
         $query->execute(array('kuva' => $this->kuva, 'nimi' => $this->nimi, 'hinta' => $this->hinta, 'kuvaus' => $this->kuvaus));

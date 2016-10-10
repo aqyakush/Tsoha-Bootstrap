@@ -22,10 +22,29 @@ class toive_controller extends BaseController {
           'toive' => $params['toive'],
         ); 
         $toive = new Toive($attributes);
-        $toive->save();
+        $errors = $toive->errors();
+        if(count($errors) == 0){
+        // TOive on validi, hyvä homma!
+            $toive->save();
+           
+        // Ohjataan käyttäjä lisäyksen jälkeen toiveiden esittelysivulle
+            Redirect::to('/Wishes', array('message' => 'Toive on lisätty kirjastoosi!'));
+        }else{
+         // Toivessa oli jotain vikaa :(
+            View::make('ostoskassi/add_wish.html', array('errors' => $errors, 'attributes' => $attributes));
+         }
+    }
+    public static function destroy($atunnus, $lento){
+        self::check_logged_in();
+        // Alustetaan Game-olio annetulla id:llä
+        $toive = new Toive(array('atunnus' => $atunnus, 'lento' => $lento));
+        // Kutsutaan Game-malliluokan metodia destroy, joka poistaa pelin sen id:llä
+        $toive->destroy();
 
-        // Ohjataan käyttäjä lisäyksen jälkeen pelin esittelysivulle
-        Redirect::to('/wishes/' . $toive->atunnus, array('message' => 'Peli on lisätty kirjastoosi!'));
+        // Ohjataan käyttäjä tuotteen listaussivulle ilmoituksen kera
+        Redirect::to('/Wishes', array('message' => 'Toive on poistettu onnistuneesti!'));
+    }
+        
         
   }
-}
+

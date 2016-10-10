@@ -16,6 +16,7 @@ class Tilaus extends BaseModel{
     
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_lento');
     }
     
     public static function all(){
@@ -51,4 +52,32 @@ class Tilaus extends BaseModel{
 
     return null;
     }
+     public function save($ttunnus){
+    // Lisätään RETURNING ttunnus tietokantakyselymme loppuun, niin saamme lisätyn rivin ttunnus-sarakkeen arvon
+        $query = DB::connection()->prepare('INSERT INTO TILAUS (atunnus, lento) VALUES (:atunnus, :lento) RETURNING otunnus');
+    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+        $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento));
+    // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
+        $row = $query->fetch();
+    // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
+        $this->otunnus = $row['otunnus'];
+        $query1 = DB::connection()->prepare('INSERT INTO LIITOSTAULU (otunnus, ttunnus) VALUES (:otunnus, :ttunnus)');
+    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+        $query1->execute(array('otunnus' => $this->otunnus, 'ttunnus' => $ttunnus));
+        
+  }
+  public function validate_lento(){
+    $errors = array();
+    if($this->lento == '' || $this->lento == null){
+        $errors[] = 'Lento ei saa olla tyhjä!';
+    }
+    if( strlen($this->lento) < 5){
+        $errors[] = 'Lennon pituuden tulee olla vähintään viisi merkkiä ja';
+    }
+    if (strlen($this->lento) > 10){
+        $errors[] = 'ei saa olla yli 10 merkkiä!';
+    }
+
+    return $errors;
+ }
 }

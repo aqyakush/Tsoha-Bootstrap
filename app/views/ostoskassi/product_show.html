@@ -5,7 +5,7 @@
   <h1>{{tuote.nimi}}</h1>
   <!-- Painikkeet tähän -->
   <p>
-    <h1><a href="#" class="label label-primary">Ostaa</a></h1>
+    <h1><a href="{{base_path}}/Order/{{user_logged_in.atunnus}}/{{tuote.ttunnus}}" class="label label-primary">Ostaa</a></h1>
   </p>
   <!-- Tiedot tulee listana tähän -->
   <ul>

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+{% import "macros/forms.html" as forms %}
+{% if errors %}
+  <div class="alert alert-danger">
+      <ul>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+  <h1>Haluut ostaa {{tuote.nimi}}</h1>
+  <!-- Painikkeet tähän -->
+  
+  <!-- Tiedot tulee listana tähän -->
+  <form method="post" action="{{base_path}}/Order/{{user_logged_in.atunnus}}/{{tuote.ttunnus}}">
+  <ul>
+    <li><strong>Hinta:</strong> {{tuote.hinta}}</li>
+  </ul>
+  <!-- Kuvaus tulee tähän -->
+  <div class="form-group">
+      <label class="control-label">Kirjoittaa lentosi johon haluut tilaus</label>
+      <input type="text" name="lento" class="form-control">
+  </div>
+  <div class="form-group">
+      <button type="submit" class="label label-primary">Ostaa</button>
+  </div>
+  </form>
+  
+{% endblock %}

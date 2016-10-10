@@ -55,13 +55,28 @@
   $routes->get('/Wishes', function(){
     toive_controller::index();
   });
-  $routes->post('/Wishes/::atunnus', function($atunnus){
+  $routes->post('/Wishes/:atunnus', function($atunnus){
       toive_controller::store($atunnus);
    });
    // Toiven lisäyslomakkeen näyttäminen
    $routes->get('/Wishes/new', function(){
       toive_controller::create();
     });
+    $routes->post('/Wishes/:atunnus/:lento/destroy', function($atunnus, $lento){
+  // Tuotteen poisto
+      toive_controller::destroy($atunnus,$lento);
+    });
+    //tilauksijen esitely sivu
+   $routes->get('/Orders', function(){
+       tilaus_controller::index();
+   });
+    //tilauksijen esitely sivu
+   $routes->post('/Order/:atunnus/:ttunnus', function($atunnus, $ttunnus){
+       tilaus_controller::store($atunnus, $ttunnus);
+   });
+   $routes->get('/Order/:atunnus/:ttunnus', function($atunnus, $ttunnus){
+       tilaus_controller::create($ttunnus);
+   });
  
   
   
