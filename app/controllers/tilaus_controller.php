@@ -4,8 +4,9 @@ class tilaus_controller extends BaseController {
     public static function index(){
         //Haetaan kaikki tuotteet tietokannas
         $tilaukset = Tilaus::all();
+        $liitostaulu = Liitostaulu::all();
         //put your code here
-        View::make('ostoskassi/Tilaukset.html', array('tilaukset' => $tilaukset));
+        View::make('ostoskassi/Tilaukset.html', array('tilaukset' => $tilaukset), array('liitostaulu' => $liitostaulu));
     }
     public static function store($atunnus,$ttunnus){
         self::check_logged_in();
@@ -25,12 +26,7 @@ class tilaus_controller extends BaseController {
         }else{
          // Toivessa oli jotain vikaa :(
             View::make('ostoskassi/Buy_product.html', array('errors' => $errors, 'attributes' => $attributes));
-         }
-        
-        
-
-        
-        
+         }        
   }
    public static function create($ttunnus){
        self::check_logged_in();
@@ -39,12 +35,12 @@ class tilaus_controller extends BaseController {
    }
    
    
-  public static function destroy($ttunnus){
+  public static function destroy($otunnus){
     self::check_logged_in();
     // Alustetaan Game-olio annetulla id:llä
-    $tuote = new Tuote(array('ttunnus' => $ttunnus));
+    $tilaus = new Tilaus(array('otunnus' => $otunnus));
     // Kutsutaan Game-malliluokan metodia destroy, joka poistaa pelin sen id:llä
-    $tuote->destroy();
+    $tilaus->destroy();
 
     // Ohjataan käyttäjä tuotteen listaussivulle ilmoituksen kera
     Redirect::to('/products', array('message' => 'Tuote on poistettu onnistuneesti!'));

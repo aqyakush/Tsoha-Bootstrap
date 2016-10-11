@@ -4,9 +4,11 @@
   {{tuote.kuva}}
   <h1>{{tuote.nimi}}</h1>
   <!-- Painikkeet tähän -->
+  {% if user_logged_in %}
   <p>
     <h1><a href="{{base_path}}/Order/{{user_logged_in.atunnus}}/{{tuote.ttunnus}}" class="label label-primary">Ostaa</a></h1>
   </p>
+  {% endif %}
   <!-- Tiedot tulee listana tähän -->
   <ul>
     <li><strong>Hinta:</strong> {{tuote.hinta}}</li>
@@ -15,7 +17,7 @@
   <p>
       {{tuote.kuvaus}}
   </p>
-  {% if user_logged_in.oikeuksia == 0 %}
+  {% if user_logged_in.oikeuksia == 0 and user_logged_in%}
     <form method="post" action="{{base_path}}/products/{{tuote.ttunnus}}/destroy" style="display: inline-block;">
         <button type="submit" class="btn btn-danger">Poista</button>
     </form>

@@ -1,5 +1,8 @@
 <?php
 
+  function check_logged_in(){
+    BaseController::check_logged_in();
+  }
 
   $routes->get('/', function() {
     HelloWorldController::index();
@@ -43,14 +46,14 @@
   });
   $routes->get('/login', function(){
     // Kirjautumislomakkeen esittäminen
-    UserController::login();
+    asiakas_controller::login();
   });
   $routes->post('/login', function(){
     // Kirjautumisen käsittely
-    UserController::handle_login();
+    asiakas_controller::handle_login();
   });
   $routes->post('/logout', function(){
-    UserController::logout();
+    asiakas_controller::logout();
   });
   $routes->get('/Wishes', function(){
     toive_controller::index();
@@ -70,6 +73,9 @@
    $routes->get('/Orders', function(){
        tilaus_controller::index();
    });
+   $routes->post('/Order/:otunnus/destroy', function($otunnus){
+       tilaus_controller::destroy($otunnus);
+   });
     //tilauksijen esitely sivu
    $routes->post('/Order/:atunnus/:ttunnus', function($atunnus, $ttunnus){
        tilaus_controller::store($atunnus, $ttunnus);
@@ -77,6 +83,7 @@
    $routes->get('/Order/:atunnus/:ttunnus', function($atunnus, $ttunnus){
        tilaus_controller::create($ttunnus);
    });
+  
  
   
   

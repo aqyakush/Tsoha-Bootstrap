@@ -80,4 +80,11 @@ class Tilaus extends BaseModel{
 
     return $errors;
  }
+  public function destroy(){
+        $query1 = DB::connection()->prepare('DELETE FROM LIITOSTAULU WHERE  otunnus = :otunnus');
+        $query1->execute(array('otunnus' => $this->otunnus));
+        $query = DB::connection()->prepare('DELETE FROM TILAUS WHERE  otunnus = :otunnus');
+        $query->execute(array('otunnus' => $this->otunnus));
+                
+  }
 }

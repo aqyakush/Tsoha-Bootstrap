@@ -11,7 +11,7 @@
  *
  * @author jaa
  */
-class UserController extends BaseController{
+class asiakas_controller extends BaseController{
     public static function login(){
       View::make('ostoskassi/login.html');
     }

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
   <h1>Tuottevalikoima</h1>
-  {% if user_logged_in.oikeuksia == 0 %}
+  {% if user_logged_in.oikeuksia == 0 and  user_logged_in %}
     <p>
         <a href="{{base_path}}/products/new" class="btn btn-success">Lisää tuotte</a>
     </p>

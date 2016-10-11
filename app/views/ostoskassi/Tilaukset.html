@@ -22,11 +22,12 @@
                 <td>{{tilaus.otunnus}}</td>
                 <td>{{tilaus.lento}}</td>
                 <td>
-                <form method="post" action="{{base_path}}/Order/:{{tilaus.otunnus}}/:{{tuote.ttunnus}}/destroy" style="display: inline-block;">
+                <form method="post" action="{{base_path}}/Order/{{tilaus.otunnus}}/destroy" style="display: inline-block;">
                     <button type="submit" class="btn btn-danger">Poista</button>
                 </form>
                 </td>
-                <td>{{tuote.nimi}}</td>
+                
+                <td>{{tilaus.tuote.nimi}}</td>
             </tr>
         {% endif %} 
         {% if user_logged_in.oikeuksia == 0%}
@@ -34,7 +35,7 @@
                 <td>{{tilaus.atunnus}}</td>
                 <td>{{tilaus.otunnus}}</td>
                 <td>{{tilaus.lento}}</td>
-                <td>{{tuote.nimi}}</td>
+                <td>{{tilaus.tuote.nimi}}</td>
             </tr>
         {% endif %} 
       {% endfor %}
