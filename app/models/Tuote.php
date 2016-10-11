@@ -105,8 +105,18 @@ class Tuote extends BaseModel{
      
   }
    public function destroy(){
-        $query = DB::connection()->prepare('DELETE FROM TUOTE WHERE  ttunnus = :ttunnus');
-        $query->execute(array('ttunnus' => $this->ttunnus));
+       $tilaukset = Liitostaulu::findt($this->ttunnus);
+       if ($tilaukset != null){
+           foreach($tilaukset as $tilaus){
+                $query1 = DB::connection()->prepare('DELETE FROM LIITOSTAULU WHERE  otunnus = :otunnus');
+                $query1->execute(array('otunnus' => $tilaus->otunnus));
+                $query = DB::connection()->prepare('DELETE FROM TILAUS WHERE  otunnus = :otunnus');
+                $query->execute(array('otunnus' => $tilaus->otunnus));
+            }
+       }
+        
+        $query2 = DB::connection()->prepare('DELETE FROM TUOTE WHERE  ttunnus = :ttunnus');
+        $query2->execute(array('ttunnus' => $this->ttunnus));
         
    }
   

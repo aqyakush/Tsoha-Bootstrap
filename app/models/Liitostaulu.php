@@ -11,8 +11,8 @@
  *
  * @author jaa
  */
-class Liitostaulu {
-    public $ottunus, $ttunnus;
+class Liitostaulu extends BaseModel{
+    public $otunnus, $ttunnus;
     
     public function __construct($attributes){
         parent::__construct($attributes);
@@ -46,6 +46,22 @@ class Liitostaulu {
       ));
 
       return $taulu;
+    }
+
+    return null;
+    }
+    public static function findt($ttunnus){
+        $query = DB::connection()->prepare('SELECT * FROM Liitostaulu WHERE ttunnus = :ttunnus');
+        $query->execute(array('ttunnus' => $ttunnus));
+        $row = $query->fetch();
+        $taulut = array();
+        if($row){
+            $taulut[] = new Liitostaulu(array(
+            'otunnus' => $row['otunnus'],
+            'ttunnus' => $row['ttunnus']
+      ));
+
+      return $taulut;
     }
 
     return null;
