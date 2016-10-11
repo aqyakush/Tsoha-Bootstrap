@@ -26,7 +26,7 @@ class Liitostaulu extends BaseModel{
         foreach($rows as $row){
             $taulut[]=new Liitostaulu(array(
                 'otunnus' => $row['otunnus'],
-                'ttunnus' => $row['ttunus']
+                'ttunnus' => $row['ttunnus']
                 
             ));
        
@@ -42,7 +42,7 @@ class Liitostaulu extends BaseModel{
         if($row){
             $taulu = new Liitotaulu(array(
             'otunnus' => $row['otunnus'],
-            'ttunnus' => $row['ttunus']
+            'ttunnus' => $row['ttunnus']
       ));
 
       return $taulu;
