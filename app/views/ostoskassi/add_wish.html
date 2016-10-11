@@ -11,7 +11,7 @@
   {% endif %}
 <h1>Lisää toive</h1>
 
-  <form method="post" action="{{base_path}}/Wishes/:{{user_logged_in.atunnus}}">
+  <form method="post" action="{{base_path}}/Wishes/{{user_logged_in.atunnus}}">
     <div class="form-group">
       <label class="control-label">Atunnus</label>
       <input type="text" name="atunnus" value={{user_logged_in.atunnus}} readonly>
