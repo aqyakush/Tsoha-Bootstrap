@@ -43,7 +43,7 @@ class tilaus_controller extends BaseController {
     $tilaus->destroy();
 
     // Ohjataan käyttäjä tuotteen listaussivulle ilmoituksen kera
-    Redirect::to('/products', array('message' => 'Tuote on poistettu onnistuneesti!'));
+    Redirect::to('/Orders', array('message' => 'Tuote on poistettu onnistuneesti!'));
   }
     
 }

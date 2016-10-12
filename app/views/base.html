@@ -23,7 +23,7 @@
   <body>
     <h4> Ostoskassi </h4>
     {% if user_logged_in %}
-        <h1>Käyttäjän {{user_logged_in.nimi}} on kirjautunut</h1>
+        <h5>Käyttäjä {{user_logged_in.nimi}} on kirjautunut</h5>
     {% endif %}
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
@@ -36,16 +36,15 @@
             <span class="icon-bar"></span>
           </button>
           <!-- Sovelluksen nimi -->
-          <a class="navbar-brand" href="{{base_path}}">Tsoha Bootstrap</a>
+          <a class="navbar-brand" href="{{base_path}}">Etusivu</a>
         </div>
 
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav">
             <!-- Navigaation linkit -->
-            <li><a href="{{base_path}}">Etusivu</a></li>
             <li><a href="/tsoha/products">Tuottevalikoima</a></li>
             {% if user_logged_in %}
-                <li><a href="/tsoha/Wishes">Erityistoiveet</a></li>
+                <li><a href="/tsoha/Wishes">Toiveet</a></li>
                 <li><a href="/tsoha/Orders">Tilaukset</a></li>
             {% endif %}
           </ul>

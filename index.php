@@ -1,4 +1,4 @@
-vunet<?php
+<?php
 
   // Laitetaan virheilmoitukset näkymään
   error_reporting(E_ALL);
