@@ -70,7 +70,7 @@
       toive_controller::destroy($atunnus,$lento);
     });
     //tilauksijen esitely sivu
-   $routes->get('/Orders', function(){
+   $routes->get('/Orders/', function(){
        tilaus_controller::index();
    });
    $routes->post('/Order/:otunnus/destroy', function($otunnus){
@@ -83,8 +83,9 @@
    $routes->get('/Order/:atunnus/:ttunnus', function($atunnus, $ttunnus){
        tilaus_controller::create($ttunnus);
    });
-  
- 
+   $routes->get('/Order/:otunnus', function($otunnus){
+       tilaus_controller::show($otunnus);
+   });
   
   
   

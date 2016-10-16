@@ -37,15 +37,15 @@ class Liitostaulu extends BaseModel{
     public static function find($otunnus){
         $query = DB::connection()->prepare('SELECT * FROM Liitostaulu WHERE otunnus = :otunnus');
         $query->execute(array('otunnus' => $otunnus));
-        $row = $query->fetch();
-
-        if($row){
-            $taulu = new Liitotaulu(array(
+        $rows = $query->fetch();
+        $taulut = array();
+        foreach($rows as $row){
+            $taulut[] = new Liitostaulu(array(
             'otunnus' => $row['otunnus'],
             'ttunnus' => $row['ttunnus']
-      ));
+        ));
 
-      return $taulu;
+        return $taulut;
     }
 
     return null;
@@ -53,9 +53,9 @@ class Liitostaulu extends BaseModel{
     public static function findt($ttunnus){
         $query = DB::connection()->prepare('SELECT * FROM Liitostaulu WHERE ttunnus = :ttunnus');
         $query->execute(array('ttunnus' => $ttunnus));
-        $row = $query->fetch();
+        $rows = $query->fetch();
         $taulut = array();
-        if($row){
+        foreach($rows as $row){
             $taulut[] = new Liitostaulu(array(
             'otunnus' => $row['otunnus'],
             'ttunnus' => $row['ttunnus']

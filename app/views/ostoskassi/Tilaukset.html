@@ -11,7 +11,6 @@
         {% if user_logged_in.oikeuksia == 1%}
             <th>Poista</th>
         {% endif %}
-        <th>Tuote</th>
       </tr>
     </thead>
 
@@ -19,23 +18,20 @@
       {% for tilaus in tilaukset %}
         {% if user_logged_in.atunnus == tilaus.atunnus and user_logged_in.oikeuksia == 1%}
             <tr>
-                <td>{{tilaus.otunnus}}</td>
+                <td><a href="/tsoha/Order/{{tilaus.otunnus}}">{{tilaus.otunnus}}</a></td>
                 <td>{{tilaus.lento}}</td>
                 <td>
                 <form method="post" action="{{base_path}}/Order/{{tilaus.otunnus}}/destroy" style="display: inline-block;">
                     <button type="submit" class="btn btn-danger">Poista</button>
                 </form>
                 </td>
-                
-                <td>{{tilaus.tuote.nimi}}</td>
             </tr>
         {% endif %} 
         {% if user_logged_in.oikeuksia == 0%}
             <tr>
                 <td>{{tilaus.atunnus}}</td>
-                <td>{{tilaus.otunnus}}</td>
+                <td><a href="/tsoha/Order/{{tilaus.otunnus}}">{{tilaus.otunnus}}</a></td>
                 <td>{{tilaus.lento}}</td>
-                <td>{{tilaus.tuote.nimi}}</td>
             </tr>
         {% endif %} 
       {% endfor %}

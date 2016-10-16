@@ -52,6 +52,23 @@ class Tilaus extends BaseModel{
 
     return null;
     }
+    public static function findal($atunnus, $lento){
+        $query = DB::connection()->prepare('SELECT * FROM Tilaus WHERE atunnus = :atunnus and lento = :lento LIMIT 1');
+        $query->execute(array('atunnus' => $atunnus, 'lento' => $lento));
+        $row = $query->fetch();
+
+        if($row){
+            $tilaus = new Tilaus(array(
+            'otunnus' => $row['otunnus'],
+            'atunnus' => $row['atunnus'],
+            'lento' => $row['lento']
+      ));
+
+      return $tilaus;
+    }
+
+    return null;
+    }
      public function save($ttunnus){
     // Lisätään RETURNING ttunnus tietokantakyselymme loppuun, niin saamme lisätyn rivin ttunnus-sarakkeen arvon
         $query = DB::connection()->prepare('INSERT INTO TILAUS (atunnus, lento) VALUES (:atunnus, :lento) RETURNING otunnus');
@@ -64,6 +81,12 @@ class Tilaus extends BaseModel{
         $query1 = DB::connection()->prepare('INSERT INTO LIITOSTAULU (otunnus, ttunnus) VALUES (:otunnus, :ttunnus)');
     // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
         $query1->execute(array('otunnus' => $this->otunnus, 'ttunnus' => $ttunnus));
+        
+  }
+  public function savetuote($otunnus, $ttunnus){
+        $query1 = DB::connection()->prepare('INSERT INTO LIITOSTAULU (otunnus, ttunnus) VALUES (:otunnus, :ttunnus)');
+    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+        $query1->execute(array('otunnus' => $otunnus, 'ttunnus' => $ttunnus));
         
   }
   public function validate_lento(){
@@ -87,4 +110,20 @@ class Tilaus extends BaseModel{
         $query->execute(array('otunnus' => $this->otunnus));
                 
   }
+  public static function tilaus($otunnus){
+        $query = DB::connection()->prepare('SELECT Tilaus.otunnus as otunnus, Tuote.nimi as nimi, Tilaus.atunnus as atunnus, Tilaus.lento as lento, Tuote.hinta as hinta FROM Tilaus, Tuote, Liitostaulu WHERE Tuote.ttunnus = Liitostaulu.ttunnus and Tilaus.otunnus = Liitostaulu.otunnus and Tilaus.otunnus = :otunnus');
+        $query->execute(array('otunnus' => $otunnus));
+        $rows = $query->fetchAll();
+        $tilaukset = array();
+        foreach($rows as $row){
+            $tilaukset[]= (array(
+                'otunnus' => $row['otunnus'],
+                'nimi' => $row['nimi'],
+                'atunnus' => $row['atunnus'],
+                'lento' => $row['lento'],
+                'hinta' => $row['hinta']
+         ));
+        }
+        return $tilaukset;
+    }
 }
