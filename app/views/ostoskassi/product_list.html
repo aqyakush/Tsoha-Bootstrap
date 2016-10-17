@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
+  {% if message != null %}
+  {{forms.message(message)}}
+  {% endif %}
   <h1>Tuottevalikoima</h1>
   {% if user_logged_in.oikeuksia == 0 and  user_logged_in %}
     <p>

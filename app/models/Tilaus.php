@@ -83,12 +83,7 @@ class Tilaus extends BaseModel{
         $query1->execute(array('otunnus' => $this->otunnus, 'ttunnus' => $ttunnus));
         
   }
-  public function savetuote($otunnus, $ttunnus){
-        $query1 = DB::connection()->prepare('INSERT INTO LIITOSTAULU (otunnus, ttunnus) VALUES (:otunnus, :ttunnus)');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
-        $query1->execute(array('otunnus' => $otunnus, 'ttunnus' => $ttunnus));
-        
-  }
+  
   public function validate_lento(){
     $errors = array();
     if($this->lento == '' || $this->lento == null){

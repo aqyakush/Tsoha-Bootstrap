@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
+  {{forms.message(message)}}
   {% if user_logged_in.oikeuksia == 1 %}
     <p>
         <a href="{{base_path}}/Wishes/new" class="btn btn-success">Lisää toive</a>

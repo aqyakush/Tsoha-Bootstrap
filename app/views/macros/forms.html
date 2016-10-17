@@ -1,8 +1,16 @@
-{% macro destroy_button() %}
-  <form method="post" action="{{base_path}}/products/{{tuote.ttunnus}}/destroy" style="display: inline-block;">
+{% macro destroy_button(action) %}
+  <form method="post" action="{{action}}" style="display: inline-block;">
     <button type="submit" class="btn btn-danger">Poista</button>
   </form>
 {% endmacro %}
+
+{% macro message(message) %}
+  <div class="alert alert-success">
+    {{message}}
+  </div>
+{% endmacro %}
+
+
 
 
 

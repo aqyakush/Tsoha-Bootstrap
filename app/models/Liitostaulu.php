@@ -16,6 +16,7 @@ class Liitostaulu extends BaseModel{
     
     public function __construct($attributes){
         parent::__construct($attributes);
+        $this->validators = array('validate_lento');
     }
     
     public static function all(){
@@ -43,13 +44,12 @@ class Liitostaulu extends BaseModel{
             $taulut[] = new Liitostaulu(array(
             'otunnus' => $row['otunnus'],
             'ttunnus' => $row['ttunnus']
-        ));
-
-        return $taulut;
+        )); 
     }
 
-    return null;
+    return $taulut;
     }
+    
     public static function findt($ttunnus){
         $query = DB::connection()->prepare('SELECT * FROM Liitostaulu WHERE ttunnus = :ttunnus');
         $query->execute(array('ttunnus' => $ttunnus));
@@ -57,13 +57,30 @@ class Liitostaulu extends BaseModel{
         $taulut = array();
         foreach($rows as $row){
             $taulut[] = new Liitostaulu(array(
-            'otunnus' => $row['otunnus'],
-            'ttunnus' => $row['ttunnus']
-      ));
-
-      return $taulut;
+                'otunnus' => $row['otunnus'],
+                'ttunnus' => $row['ttunnus']
+            ));
+        }   
+        return $taulut;   
     }
+    public function validate_lento(){
+        $errors = array();
+        if($this->lento == '' || $this->lento == null){
+            $errors[] = 'Lento ei saa olla tyhjä!';
+        }
+        if( strlen($this->lento) < 5){
+            $errors[] = 'Lennon pituuden tulee olla vähintään viisi merkkiä ja';
+        }
+        if (strlen($this->lento) > 10){
+            $errors[] = 'ei saa olla yli 10 merkkiä!';
+        }
 
-    return null;
+        return $errors;
+    }
+    public function save($otunnus, $ttunnus){
+        $query1 = DB::connection()->prepare('INSERT INTO LIITOSTAULU (otunnus, ttunnus) VALUES (:otunnus, :ttunnus)');
+    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
+        $query1->execute(array('otunnus' => $otunnus, 'ttunnus' => $ttunnus));
+        
     }
 }

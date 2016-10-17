@@ -104,20 +104,26 @@ class Tuote extends BaseModel{
         $query->execute(array('ttunnus' => $this->ttunnus, 'kuva' => $this->kuva, 'nimi' => $this->nimi, 'hinta' => $this->hinta, 'kuvaus' => $this->kuvaus));
      
   }
+  
+  //poistaa tuote liitostaulusta, tilauksista. Jos tilauksessa on muita tuoteita nii se poistaa vaa
+  //poistettu tuote, jos tilauksessa ei ole muita tuoteita se poistaa koko tilaus
    public function destroy(){
-       $tilaukset = Liitostaulu::findt($this->ttunnus);
-       if ($tilaukset != null){
-           foreach($tilaukset as $tilaus){
-                $query1 = DB::connection()->prepare('DELETE FROM LIITOSTAULU WHERE  otunnus = :otunnus');
-                $query1->execute(array('otunnus' => $tilaus->otunnus));
+       $query1 = DB::connection()->prepare('DELETE FROM LIITOSTAULU WHERE  ttunnus = :ttunnus');
+       $query1->execute(array('ttunnus' => $this->ttunnus));
+       $tilaukset = Tilaus::all();
+       foreach ($tilaukset as $tilaus){
+            $queryh = DB::connection()->prepare('SELECT otunnus FROM Liitostaulu WHERE  otunnus = :otunnus');
+            $queryh->execute(array('otunnus' => $tilaus->otunnus));
+            $row = $queryh->fetch();
+            if ($row == null){
                 $query = DB::connection()->prepare('DELETE FROM TILAUS WHERE  otunnus = :otunnus');
                 $query->execute(array('otunnus' => $tilaus->otunnus));
             }
        }
-        
         $query2 = DB::connection()->prepare('DELETE FROM TUOTE WHERE  ttunnus = :ttunnus');
         $query2->execute(array('ttunnus' => $this->ttunnus));
         
-   }
+     }
   
+   
 }
