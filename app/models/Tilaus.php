@@ -19,6 +19,7 @@ class Tilaus extends BaseModel{
         $this->validators = array('validate_lento');
     }
     
+    //etsii kaikki tilaukset
     public static function all(){
         $query = DB::connection()->prepare('SELECT * FROM Tilaus');
         $query->execute();
@@ -35,6 +36,8 @@ class Tilaus extends BaseModel{
         
         return $tilaukset;
     }
+    
+    //etsii tilaus tilaus numerolla
     public static function find($otunnus){
         $query = DB::connection()->prepare('SELECT * FROM Tilaus WHERE otunnus = :otunnus LIMIT 1');
         $query->execute(array('otunnus' => $otunnus));
@@ -52,6 +55,8 @@ class Tilaus extends BaseModel{
 
     return null;
     }
+    
+    //etsi tilaus jolla on jo sama asiakas ja sama lento
     public static function findal($atunnus, $lento){
         $query = DB::connection()->prepare('SELECT * FROM Tilaus WHERE atunnus = :atunnus and lento = :lento LIMIT 1');
         $query->execute(array('atunnus' => $atunnus, 'lento' => $lento));
@@ -69,21 +74,18 @@ class Tilaus extends BaseModel{
 
     return null;
     }
+    
+    //tallenta tilaus
      public function save($ttunnus){
-    // Lisätään RETURNING ttunnus tietokantakyselymme loppuun, niin saamme lisätyn rivin ttunnus-sarakkeen arvon
         $query = DB::connection()->prepare('INSERT INTO TILAUS (atunnus, lento) VALUES (:atunnus, :lento) RETURNING otunnus');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
         $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento));
-    // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
         $row = $query->fetch();
-    // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
         $this->otunnus = $row['otunnus'];
         $query1 = DB::connection()->prepare('INSERT INTO LIITOSTAULU (otunnus, ttunnus) VALUES (:otunnus, :ttunnus)');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
         $query1->execute(array('otunnus' => $this->otunnus, 'ttunnus' => $ttunnus));
         
   }
-  
+  //tarkistaa lennon tiedot oikeaksi
   public function validate_lento(){
     $errors = array();
     if($this->lento == '' || $this->lento == null){
@@ -98,6 +100,7 @@ class Tilaus extends BaseModel{
 
     return $errors;
  }
+ //tuhoa tilaus ja kaikki liitostaulussa olevat tilaukset
   public function destroy(){
         $query1 = DB::connection()->prepare('DELETE FROM LIITOSTAULU WHERE  otunnus = :otunnus');
         $query1->execute(array('otunnus' => $this->otunnus));
@@ -105,17 +108,16 @@ class Tilaus extends BaseModel{
         $query->execute(array('otunnus' => $this->otunnus));
                 
   }
+  
+  //etsi kaikki tilaukset jolla on tietty tunnus ja palauttaa lista tavaroita mitkä ovat siinä tilauksessa
   public static function tilaus($otunnus){
-        $query = DB::connection()->prepare('SELECT Tilaus.otunnus as otunnus, Tuote.nimi as nimi, Tilaus.atunnus as atunnus, Tilaus.lento as lento, Tuote.hinta as hinta FROM Tilaus, Tuote, Liitostaulu WHERE Tuote.ttunnus = Liitostaulu.ttunnus and Tilaus.otunnus = Liitostaulu.otunnus and Tilaus.otunnus = :otunnus');
+        $query = DB::connection()->prepare('SELECT Tuote.nimi as nimi, Tuote.hinta as hinta FROM Tilaus, Tuote, Liitostaulu WHERE Tuote.ttunnus = Liitostaulu.ttunnus and Tilaus.otunnus = Liitostaulu.otunnus and Tilaus.otunnus = :otunnus');
         $query->execute(array('otunnus' => $otunnus));
         $rows = $query->fetchAll();
         $tilaukset = array();
         foreach($rows as $row){
             $tilaukset[]= (array(
-                'otunnus' => $row['otunnus'],
                 'nimi' => $row['nimi'],
-                'atunnus' => $row['atunnus'],
-                'lento' => $row['lento'],
                 'hinta' => $row['hinta']
          ));
         }

@@ -1,16 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of UserController
- *
- * @author jaa
- */
 class asiakas_controller extends BaseController{
     public static function login(){
       View::make('ostoskassi/login.html');

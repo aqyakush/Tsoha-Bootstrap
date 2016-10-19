@@ -35,9 +35,9 @@ class Toive extends BaseModel{
         
         return $toiveet;
     }
-    public static function find($atunnus){
-        $query = DB::connection()->prepare('SELECT * FROM Toiveet WHERE atunnus = :atunnus LIMIT 1');
-        $query->execute(array('atunnus' => $atunnus));
+    public static function find($lento){
+        $query = DB::connection()->prepare('SELECT * FROM Toiveet WHERE lento = :lento LIMIT 1');
+        $query->execute(array('lento' => $lento));
         $row = $query->fetch();
 
         if($row){
@@ -74,9 +74,9 @@ class Toive extends BaseModel{
       if($this->toive==''||$this->toive==null){
           $errors[]='Toive ei saa olla tyhjä';
       } if (strlen($this->toive)>300){
-          $errors[]='Hinta ei saa olla pidempi kuin 300 merkkiä';
+          $errors[]='Toive ei saa olla pidempi kuin 300 merkkiä';
       } if (strlen($this->toive)<5){
-          $errors[]='Kuvauksen pituuden tulee olla vähintään viisi merkkiä';
+          $errors[]='Toiveen pituuden tulee olla vähintään viisi merkkiä';
       }
       return $errors;
   }
@@ -85,4 +85,9 @@ class Toive extends BaseModel{
         $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento));
         
    }
+    public function update(){
+        $query = DB::connection()->prepare('UPDATE TOIVEET SET toive=:toive where lento = :lento and atunnus= :atunnus');
+        $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento, 'toive' => $this->toive));
+     
+  }
 }

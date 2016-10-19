@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 {% import "macros/forms.html" as forms %}
+  {% if message != null %}
   {{forms.message(message)}}
+  {% endif %}
   <table class="table table-striped table-bordered">
     <thead>
       <tr>

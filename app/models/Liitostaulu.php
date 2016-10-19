@@ -50,19 +50,6 @@ class Liitostaulu extends BaseModel{
     return $taulut;
     }
     
-    public static function findt($ttunnus){
-        $query = DB::connection()->prepare('SELECT * FROM Liitostaulu WHERE ttunnus = :ttunnus');
-        $query->execute(array('ttunnus' => $ttunnus));
-        $rows = $query->fetch();
-        $taulut = array();
-        foreach($rows as $row){
-            $taulut[] = new Liitostaulu(array(
-                'otunnus' => $row['otunnus'],
-                'ttunnus' => $row['ttunnus']
-            ));
-        }   
-        return $taulut;   
-    }
     public function validate_lento(){
         $errors = array();
         if($this->lento == '' || $this->lento == null){
@@ -77,9 +64,10 @@ class Liitostaulu extends BaseModel{
 
         return $errors;
     }
+    
+    
     public function save($otunnus, $ttunnus){
         $query1 = DB::connection()->prepare('INSERT INTO LIITOSTAULU (otunnus, ttunnus) VALUES (:otunnus, :ttunnus)');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
         $query1->execute(array('otunnus' => $otunnus, 'ttunnus' => $ttunnus));
         
     }

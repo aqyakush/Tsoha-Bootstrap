@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 {% import "macros/forms.html" as forms %}
+  {% if message != null %}
   {{forms.message(message)}}
+  {% endif %}
   {% if user_logged_in.oikeuksia == 1 %}
     <p>
         <a href="{{base_path}}/Wishes/new" class="btn btn-success">Lisää toive</a>
@@ -15,7 +17,10 @@
         {% endif %}
         <th>Toive</th>
         <th>Lento</th>
-        <th></th>
+        {% if user_logged_in.oikeuksia == 1%}
+        <th>Poisto</th>
+        <th>Muokaa</th>
+        {% endif %}
       </tr>
     </thead>
 
@@ -30,6 +35,7 @@
                     <button type="submit" class="btn btn-danger">Poista</button>
                 </form>
                 </td>
+                <td><a href="{{base_path}}/Wishes/{{toive.lento}}/edit" class="btn btn-default">Muokkaa</a></td>
             </tr>
         {% endif %}
         {% if user_logged_in.oikeuksia == 0%}

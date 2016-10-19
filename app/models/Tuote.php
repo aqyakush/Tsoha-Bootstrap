@@ -20,6 +20,7 @@ class Tuote extends BaseModel{
         $this->validators = array('validate_nimi','validate_hinta','validate_kuvaus');
     }
     
+    //esitää kaikki tuotteet
     public static function all(){
         $query = DB::connection()->prepare('SELECT * FROM Tuote');
         $query->execute();
@@ -38,6 +39,8 @@ class Tuote extends BaseModel{
         
         return $tuotteet;
     }
+    
+    //etsi tuotte tuotenumerolla
     public static function find($ttunnus){
         $query = DB::connection()->prepare('SELECT * FROM Tuote WHERE ttunnus = :ttunnus LIMIT 1');
         $query->execute(array('ttunnus' => $ttunnus));
@@ -57,14 +60,12 @@ class Tuote extends BaseModel{
 
     return null;
     }
+    
+    //talenna tuote
     public function save(){
-    // Lisätään RETURNING ttunnus tietokantakyselymme loppuun, niin saamme lisätyn rivin ttunnus-sarakkeen arvon
         $query = DB::connection()->prepare('INSERT INTO TUOTE (kuva, nimi,hinta,kuvaus) VALUES (:kuva, :nimi, :hinta, :kuvaus) RETURNING ttunnus');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
         $query->execute(array('kuva' => $this->kuva, 'nimi' => $this->nimi, 'hinta' => $this->hinta, 'kuvaus' => $this->kuvaus));
-    // Haetaan kyselyn tuottama rivi, joka sisältää lisätyn rivin id-sarakkeen arvon
         $row = $query->fetch();
-    // Asetetaan lisätyn rivin id-sarakkeen arvo oliomme id-attribuutin arvoksi
         $this->ttunnus = $row['ttunnus'];
   }
   public function validate_nimi(){
@@ -98,9 +99,10 @@ class Tuote extends BaseModel{
       }
       return $errors;
   }
+  
+  //päivittää tuotteen tiedot
   public function update($ttunnus){
         $query = DB::connection()->prepare('UPDATE TUOTE SET kuva=:kuva, nimi=:nimi,hinta=:hinta,kuvaus=:kuvaus where ttunnus = :ttunnus');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
         $query->execute(array('ttunnus' => $this->ttunnus, 'kuva' => $this->kuva, 'nimi' => $this->nimi, 'hinta' => $this->hinta, 'kuvaus' => $this->kuvaus));
      
   }

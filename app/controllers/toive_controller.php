@@ -44,7 +44,27 @@ class toive_controller extends BaseController {
         // Ohjataan käyttäjä tuotteen listaussivulle ilmoituksen kera
         Redirect::to('/Wishes', array('message' => 'Toive on poistettu onnistuneesti!'));
     }
-        
-        
-  }
+    public static function edit($lento){
+       self::check_logged_in();
+       $toive = Toive::find($lento);
+       View::make('ostoskassi/edit_wish.html', array('attributes' => $toive));
+    }
+     public static function update($atunnus, $lento){
+       self::check_logged_in();
+       $params = $_POST;
+       $toive = new Toive(array(
+            'atunnus' => $atunnus,
+            'lento' => $lento,
+            'toive' => $params['toive'],
+            ));
+        $errors = $toive->errors();
+        if(count($errors) > 0){
+          View::make('ostoskassi/edit_wish.html', array('errors' => $errors, 'attributes' =>$toive)); 
+        }else{
+          $toive->update();
+
+          Redirect::to('/Wishes', array('message' => 'Tuotetta on muokattu onnistuneesti!'));
+        }
+      }
+}
 

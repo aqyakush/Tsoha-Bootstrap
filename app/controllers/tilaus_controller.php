@@ -28,7 +28,8 @@ class tilaus_controller extends BaseController {
                 Redirect::to('/Orders', array('message' => 'Tilaus on lisätty!'));
             }else{
                 // Tilauksessa oli jotain vikaa :(
-                View::make('ostoskassi/Buy_product.html', array('errors' => $errors, 'attributes' => $attributes));
+                $tuote= Tuote::find($ttunnus);
+                View::make('ostoskassi/Buy_product.html', array('errors' => $errors, 'attributes' => $attributes, 'tuote'=>$tuote));
             } 
         } else {
             Liitostaulu::save($tilaus->otunnus ,$ttunnus);
