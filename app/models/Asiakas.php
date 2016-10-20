@@ -12,7 +12,7 @@
  * @author jaa
  */
 class Asiakas extends BaseModel{
-    public $atunnus, $nimi, $syntymaaika, $lennot, $salasana, $oikeuksia;
+    public $atunnus, $nimi, $salasana, $oikeuksia;
     
     public function __construct($attributes){
         parent::__construct($attributes);
@@ -27,8 +27,6 @@ class Asiakas extends BaseModel{
             $asiakkaat[]=new Asiakas(array(
                 'atunnus' => $row['atunnus'],
                 'nimi' => $row['nimi'],
-                'syntymaaika' => $row['syntymaaika'],
-                'lennot' => $row['lennot'],
                 'salasana' => $row['salasana'],
                 'oikeuksia' => $row['oikeuksia']
             ));
@@ -46,8 +44,6 @@ class Asiakas extends BaseModel{
             $asiakas = new Asiakas(array(
             'atunnus' => $row['atunnus'],
             'nimi' => $row['nimi'],
-            'syntymaaika' => $row['syntymaaika'],
-            'lennot' => $row['lennot'],
             'salasana' => $row['salasana'],
             'oikeuksia' => $row['oikeuksia']
       ));
@@ -65,8 +61,6 @@ class Asiakas extends BaseModel{
             $asiakas = new Asiakas(array(
             'atunnus' => $row['atunnus'],
             'nimi' => $row['nimi'],
-            'syntymaaika' => $row['syntymaaika'],
-            'lennot' => $row['lennot'],
             'salasana' => $row['salasana'],
             'oikeuksia' => $row['oikeuksia']
             ));

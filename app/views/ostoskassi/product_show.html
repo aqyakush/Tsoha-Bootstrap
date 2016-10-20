@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 {% import "macros/forms.html" as forms %}
-  {{tuote.kuva}}
+  <!--{{tuote.kuva}}-->
   <h1>{{tuote.nimi}}</h1>
   <!-- Painikkeet tähän -->
-  {% if user_logged_in %}
+  {% if user_logged_in.oikeuksia == 1 and user_logged_in %}
   <p>
     <h1><a href="{{base_path}}/Order/{{user_logged_in.atunnus}}/{{tuote.ttunnus}}" class="label label-primary">Ostaa</a></h1>
   </p>

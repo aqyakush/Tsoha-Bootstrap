@@ -17,9 +17,12 @@
         {% endif %}
         <th>Toive</th>
         <th>Lento</th>
-        {% if user_logged_in.oikeuksia == 1%}
+        {% if user_logged_in.oikeuksia == 1 and toive.tila == 0 %}
         <th>Poisto</th>
         <th>Muokaa</th>
+        {% endif %}
+        {% if user_logged_in.oikeuksia == 0%}
+        <th>Tila</th>
         {% endif %}
       </tr>
     </thead>
@@ -30,12 +33,14 @@
             <tr>
                 <td>{{toive.toive}}</td>
                 <td>{{toive.lento}}</td>
+                {% if toive.tila==0 %}
                 <td>
                 <form method="post" action="{{base_path}}/Wishes/{{toive.atunnus}}/{{toive.lento}}/destroy" style="display: inline-block;">
                     <button type="submit" class="btn btn-danger">Poista</button>
                 </form>
                 </td>
-                <td><a href="{{base_path}}/Wishes/{{toive.lento}}/edit" class="btn btn-default">Muokkaa</a></td>
+                <td><a href="{{base_path}}/Wishes/{{toive.atunnus}}/{{toive.lento}}/edit" class="btn btn-default">Muokkaa</a></td>
+                {% endif %}
             </tr>
         {% endif %}
         {% if user_logged_in.oikeuksia == 0%}
@@ -43,6 +48,16 @@
                 <td>{{toive.atunnus}}</td>
                 <td>{{toive.toive}}</td>
                 <td>{{toive.lento}}</td>
+                {% if toive.tila == 0 %}
+                <td>
+                <form method="post" action="{{base_path}}/Wishes/{{toive.atunnus}}/{{toive.lento}}/tila" style="display: inline-block;">
+                    <button type="submit" class="btn btn-danger">Käsitellä</button>
+                </form>
+                </td>
+                {% endif %}
+                {% if toive.tila == 1 %}
+                  <td>Käsitelty</td>
+                {% endif %}
             </tr>
         {% endif %} 
       {% endfor %}

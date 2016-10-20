@@ -12,7 +12,7 @@
  * @author jaa
  */
 class Toive extends BaseModel{
-    public $atunnus, $toive, $lento;
+    public $atunnus, $toive, $lento, $tila;
     
     public function __construct($attributes){
         parent::__construct($attributes);
@@ -28,23 +28,25 @@ class Toive extends BaseModel{
             $toiveet[]=new Toive(array(
                 'atunnus' => $row['atunnus'],
                 'toive' => $row['toive'],
-                'lento' => $row['lento']
+                'lento' => $row['lento'],
+                'tila' => $row['tila']
             ));
        
         }
         
         return $toiveet;
     }
-    public static function find($lento){
-        $query = DB::connection()->prepare('SELECT * FROM Toiveet WHERE lento = :lento LIMIT 1');
-        $query->execute(array('lento' => $lento));
+    public static function find($atunnus, $lento){
+        $query = DB::connection()->prepare('SELECT * FROM Toiveet WHERE atunnus = :atunnus and lento = :lento LIMIT 1');
+        $query->execute(array('atunnus' => $atunnus, 'lento' => $lento,));
         $row = $query->fetch();
 
         if($row){
             $toive = new Toive(array(
             'atunnus' => $row['atunnus'],
             'toive' => $row['toive'],
-            'lento' => $row['lento']
+            'lento' => $row['lento'],
+            'tila' => $row['tila']
       ));
 
       return $toive;
@@ -53,10 +55,8 @@ class Toive extends BaseModel{
     return null;
     }
     public function save(){
-    // Lisätään RETURNING id tietokantakyselymme loppuun, niin saamme lisätyn rivin id-sarakkeen arvon
-        $query = DB::connection()->prepare('INSERT INTO TOIVEET (atunnus, lento,toive) VALUES (:atunnus, :lento, :toive) ');
-    // Muistathan, että olion attribuuttiin pääse syntaksilla $this->attribuutin_nimi
-        $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento, 'toive' => $this->toive));
+        $query = DB::connection()->prepare('INSERT INTO TOIVEET (atunnus, lento,toive, tila) VALUES (:atunnus, :lento, :toive, :tila) ');
+        $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento, 'toive' => $this->toive, 'tila'=> $this->tila));
   }
   public function validate_lento(){
     $errors = array();
@@ -88,6 +88,11 @@ class Toive extends BaseModel{
     public function update(){
         $query = DB::connection()->prepare('UPDATE TOIVEET SET toive=:toive where lento = :lento and atunnus= :atunnus');
         $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento, 'toive' => $this->toive));
+     
+  }
+   public function updatetila(){
+        $query = DB::connection()->prepare('UPDATE TOIVEET SET tila=1 where lento = :lento and atunnus= :atunnus');
+        $query->execute(array('atunnus' => $this->atunnus, 'lento' => $this->lento));
      
   }
 }

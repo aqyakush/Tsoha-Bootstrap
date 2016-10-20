@@ -86,13 +86,16 @@
    $routes->get('/Order/:otunnus', function($otunnus){
        tilaus_controller::show($otunnus);
    });
-   $routes->get('/Wishes/:lento/edit', function($lento){
-    toive_controller::edit($lento);
+   $routes->get('/Wishes/:lento/:atunnus/edit', function($lento, $atunnus){
+    toive_controller::edit($lento, $atunnus);
   });
     $routes->post('/Wishes/:atunnus/:lento/edit', function($atunnus, $lento){
-  // Tuotteen muokkaaminen
     toive_controller::update($atunnus, $lento);
   });
+  $routes->post('/Wishes/:atunnus/:lento/tila', function($atunnus, $lento){
+    toive_controller::updatetila($atunnus, $lento);
+  });
+  
   
   
   

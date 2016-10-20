@@ -20,6 +20,7 @@ class toive_controller extends BaseController {
           'atunnus' => $atunnus,
           'lento' => $params['lento'],
           'toive' => $params['toive'],
+          'tila' => 0
         ); 
         $toive = new Toive($attributes);
         $errors = $toive->errors();
@@ -44,18 +45,20 @@ class toive_controller extends BaseController {
         // Ohjataan käyttäjä tuotteen listaussivulle ilmoituksen kera
         Redirect::to('/Wishes', array('message' => 'Toive on poistettu onnistuneesti!'));
     }
-    public static function edit($lento){
+    public static function edit($lento, $atunnus){
        self::check_logged_in();
-       $toive = Toive::find($lento);
+       $toive = Toive::find($lento, $atunnus);
        View::make('ostoskassi/edit_wish.html', array('attributes' => $toive));
     }
      public static function update($atunnus, $lento){
        self::check_logged_in();
+       $toive1 = Toive::find($atunnus, $lento);
        $params = $_POST;
        $toive = new Toive(array(
-            'atunnus' => $atunnus,
-            'lento' => $lento,
+            'atunnus' => $toive1->atunnus,
+            'lento' => $toive1->lento,
             'toive' => $params['toive'],
+            'tila' => $toive1->tila
             ));
         $errors = $toive->errors();
         if(count($errors) > 0){
@@ -65,6 +68,12 @@ class toive_controller extends BaseController {
 
           Redirect::to('/Wishes', array('message' => 'Tuotetta on muokattu onnistuneesti!'));
         }
+      }
+      public static function updatetila($atunnus, $lento){
+        $toive = Toive::find($atunnus, $lento);
+        $toive->updatetila();
+
+        Redirect::to('/Wishes', array('message' => 'Tila on muokattu onnistuneesti!'));
       }
 }
 
